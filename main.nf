@@ -103,7 +103,7 @@ process configure_exomiser {
         file(hpo_file)
 
     output:
-        path '*.yml'
+        file '*.yml'
 
     script:
     """
