@@ -82,7 +82,7 @@ workflow {
         exomiser_template = file(params.exomiser_template)
         
         configure_exomiser(exomiser_template, input_file_exomiser, hpo_file_exomiser)
-        exomiser(configure_exomiser.out, appsetting_exomiser)
+        exomiser(configure_exomiser.out.flatten(), appsetting_exomiser)
     }
 
     // GADO
