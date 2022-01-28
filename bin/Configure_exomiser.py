@@ -40,6 +40,7 @@ for id, info in inputs.items():
                 line = line.replace('ped:', 'ped: ' + info['ped'])
                 line = line.replace('proband:', 'proband: ' + info['proband'])
                 line = line.replace('hpoIds:', 'hpoIds: [' + hpos[id] + ']')
+                line = line.replace('outputPrefix:', 'outputPrefix: ' + id)
                 outfile.write(line)
     print("Created profile for ", id)
     outfile.close()
