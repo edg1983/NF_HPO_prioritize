@@ -37,8 +37,8 @@ log.info """\
     ==============================================
      HPO prioritization  -  N F   P I P E L I N E    
     ==============================================
-    Exomiser                : {params.exomiser ? "active" : "NO"}
-    GADO                    : {params.GADO ? "active" : "NO"}
+    Exomiser                : ${params.exomiser ? "active" : "NO"}
+    GADO                    : ${params.GADO ? "active" : "NO"}
     HPO profiles            : ${params.HPO}
     input exomiser          : ${params.exomiser_input}
     exomiser cli            : ${params.exomiser_cli}
@@ -53,13 +53,13 @@ log.info """\
 // Check input files exist
 if (params.GADO) {
     checkPathParamList = [
-        param.GADO_cli, params.HPO, params.HPO_obofile
+        params.GADO_cli, params.HPO, params.HPO_obofile
     ]
     for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 }
 if (params.exomiser) {
     checkPathParamList = [
-        params.exomiser_cli, params.HPO, params.exomiser_appsettings, params.input_exomiser
+        params.exomiser_cli, params.HPO, params.exomiser_appsettings, params.exomiser_input
     ]
     for (param in checkPathParamList) { if (param) { file(param, checkIfExists: true) } }
 }
@@ -103,7 +103,7 @@ process configure_exomiser {
         file(hpo_file)
 
     output:
-        file '*.yml'
+        path '*.yml'
 
     script:
     """
@@ -167,10 +167,10 @@ process gado_predict {
     java -jar ${params.GADO_cli} \
         -m PRIORITIZE \
         -chp $processed_hpo \
-        -g ${params.GADO_datafolder}/hpo_prediction_genes.txt \
+        -g ${params.GADO_datafolder}/hpo_predictions_genes.txt \
         -ho ${params.HPO_obofile} \
         -hp ${params.GADO_datafolder}/hpo_predictions_matrix_spiked.dat \
         -hpi ${params.GADO_datafolder}/hpo_predictions_info.txt \
-        -o predictions
+        -o ./
     """
 }
